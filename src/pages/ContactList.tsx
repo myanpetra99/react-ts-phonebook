@@ -111,7 +111,9 @@ const [contacts, setContacts] = useState<Contact[]>(() => {
     number: string[];
   };
 
-  const addToFav = (id: number) => {
+ 
+
+  const addToFav = (id: number|null) => {
     const contactToAdd = contacts.find((contact) => contact.id === id);
 
     if (contactToAdd) {
@@ -124,7 +126,7 @@ const [contacts, setContacts] = useState<Contact[]>(() => {
     setShowPopup(false);
   };
 
-  const removeFromFav = (id: number) => {
+  const removeFromFav = (id: number | null) => {
     const contactToRemove = favcontacts.find((contact) => contact.id === id);
 
     if (contactToRemove) {
@@ -155,6 +157,10 @@ const [contacts, setContacts] = useState<Contact[]>(() => {
     setShowPopup(true);
     setContactType("normal");
   });
+
+  const seeDetail = (contactId: number) => {
+    editContacts(contactId)
+  };
 
   const filteredContacts = contacts.filter((contact) =>
     contact.name.toLowerCase().includes(searchValue.toLowerCase())
@@ -335,7 +341,7 @@ const updateLocalContacts = (updatedContact: Contact) => {
         <div className="sub-text"> Favorites &#9733;</div>
         <div className="favorites-contact-container">
           {filteredFavContacts.map((contact) => (
-            <div key={contact.id} className="contact" {...bindFav(contact.id)}>
+            <div key={contact.id} className="contact" {...bindFav(contact.id)} onClick={()=>seeDetail(contact.id)}>
               <img
                 className="contact-image"
                 src={`https://ui-avatars.com/api/?name=${contact.name}&background=random`}
@@ -359,7 +365,7 @@ const updateLocalContacts = (updatedContact: Contact) => {
 
       <div className="contact-container">
         {filteredContacts.map((contact) => (
-          <div key={contact.id} className="contact" {...bindReg(contact.id)}>
+          <div onClick={()=>seeDetail(contact.id)} key={contact.id} className="contact" {...bindReg(contact.id)}>
             <img
               className="contact-image"
               src={`https://ui-avatars.com/api/?name=${contact.name}&background=random`}
@@ -387,6 +393,9 @@ const updateLocalContacts = (updatedContact: Contact) => {
         contactId={editingContact}
         updateContacts={updateLocalContacts}
         throwError={handleError}
+        isFavorited={favcontacts.some(favcontact => favcontact.id === editingContact)}
+        toggleFalseFavorite={() => removeFromFav(editingContact)}
+        toggleTrueFavorite={() => addToFav(editingContact)}
       />
 
       <ErrorPopup message={String(error)|| String(QueryError)} isVisible={error!=""} />

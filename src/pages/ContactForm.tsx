@@ -3,6 +3,8 @@ import { useState, useRef, useEffect } from "react";
 import { css } from "@emotion/react";
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import { GET_CONTACT_DETAIL, GET_CONTACT_BY_NAME } from "../graphql/query";
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
+
 import {
   EDIT_CONTACT,
   ADD_CONTACT,
@@ -24,6 +26,9 @@ type ContactFormProps = {
   contactId: number | null;
   updateContacts: (updatedContact: Contact) => void;
   throwError: (error: Error) => void;
+  isFavorited: boolean; 
+  toggleTrueFavorite: () => void;
+  toggleFalseFavorite: () => void;
 };
 
 function ContactForm({
@@ -33,11 +38,26 @@ function ContactForm({
   contactId,
   updateContacts,
   throwError,
+  isFavorited,
+  toggleTrueFavorite,
+  toggleFalseFavorite,
 }: ContactFormProps) {
   type PhoneNumber = {
     id: number | null;
     value: string;
   };
+
+  const [isFavorite, setIsFavorite] = useState<boolean>(isFavorited);
+
+  const removeFromFav = () =>{
+    setIsFavorite(false);
+    toggleFalseFavorite();
+  }
+
+  const addToFav = () =>{
+    setIsFavorite(true);
+    toggleTrueFavorite();
+  }
 
   const [numbers, setNumbers] = useState<PhoneNumber[]>([
     { id: null, value: "" },
@@ -208,7 +228,6 @@ function ContactForm({
   };
 
   const handleEditSave = async () => {
-
     const firstName =
       firstNameRef && firstNameRef.current ? firstNameRef.current["value"] : "";
     const lastName =
@@ -360,7 +379,9 @@ function ContactForm({
 
         updateContacts(updatedContact);
       } else {
-        throwError(new Error("Failed to edit contact, it may has been deleted"));
+        throwError(
+          new Error("Failed to edit contact, it may has been deleted")
+        );
         setDataValidation(false);
         return;
       }
@@ -413,7 +434,7 @@ function ContactForm({
   useEffect(() => {
     if (mode === "edit" && contactDetailData) {
       console.log("edit mode");
-      if (contactDetailData.contact_by_pk == null){
+      if (contactDetailData.contact_by_pk == null) {
         throwError(new Error("Contact not found, it may has been deleted"));
         setDataValidation(false);
         return;
@@ -444,7 +465,10 @@ function ContactForm({
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div className="contact-form" css={(isVisible&&dataValidation) ? showForm : hideForm}>
+    <div
+      className="contact-form"
+      css={isVisible && dataValidation ? showForm : hideForm}
+    >
       <img
         className="contact-image detail-image"
         src={`https://ui-avatars.com/api/?name=${firstNameRef.current?.value} ${lastNameRef.current?.value}&background=random&rounded=true&size=128}`}
@@ -496,6 +520,21 @@ function ContactForm({
               Add more number
             </div>
             <div className="form-action-button">
+              {isFavorite ? (
+                <button
+                  className="remove-favorite-button"
+                  onClick={removeFromFav}
+                >
+                  <AiFillStar />
+                </button>
+              ) : (
+                <button
+                  className="add-favorite-button"
+                  onClick={addToFav}
+                >
+                  <AiOutlineStar/>
+                </button>
+              )}
               <button
                 className="cancel-button"
                 onClick={() => {
