@@ -2,6 +2,10 @@
 
 Deployed URL 👉🏻:  https://myanpetra99.github.io/react-ts-phonebook/
 
+# Demo video
+
+https://github.com/myanpetra99/react-ts-phonebook/assets/57763111/54f57d6d-ba8c-4723-9890-4e3c993fa70f
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -12,6 +16,7 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 ## Expanding the ESLint configuration
+
 
 If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
