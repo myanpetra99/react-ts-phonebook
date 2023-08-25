@@ -115,7 +115,7 @@ function ContactForm({
   const lastNameRef = useRef<HTMLInputElement | null>(null);
 
   const hasSpecialCharacters = (string: string) => {
-    const regex = /^[A-Za-z\s'0-9-]+$/;
+    const regex = /^[A-Za-z\s'0-9-]*$/;
     return !regex.test(string);
   };
 
