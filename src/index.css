@@ -81,3 +81,26 @@ button:focus-visible {
     background-color: #e8e6e6;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #ffffff;
+    color: black;
+  }
+  button:hover {
+    background-color: #e8e6e6;
+  }
+  input{
+    background-color: white;
+    color: black;
+  }
+
+}
+

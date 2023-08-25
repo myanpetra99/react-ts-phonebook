@@ -5,41 +5,12 @@
   text-align: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
 
 .sub-text {
   color: #888;
 }
 
-.contact-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: left;
-  width: 100%;
-  border-radius: 20px;
-  background-color: white;
-}
 
-
-.favorites-contact-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: left;
-  width: 100%;
-  background-color: white;
-  border-radius: 20px;
-  margin-bottom: 20px;
-}
 
 .contact-detail {
   display: flex;

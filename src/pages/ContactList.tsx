@@ -19,6 +19,27 @@ const inputStyle = css`
   transition: all 0.5s ease;
 `;
 
+const contact_container = css`
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: left;
+width: 100%;
+border-radius: 20px;
+background-color: white;
+`;
+
+const favorite_contact_container = css`
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: left;
+width: 100%;
+background-color: white;
+border-radius: 20px;
+margin-bottom: 20px;
+`;
+
 function ContactList() {
   const [favcontacts, setfavContacts] = useState<Contact[]>(() => {
     const localFavContacts = localStorage.getItem("favcontacts");
@@ -347,7 +368,7 @@ const updateLocalContacts = (updatedContact: Contact) => {
         }
       >
         <div className="sub-text"> Favorites &#9733;</div>
-        <div className="favorites-contact-container">
+        <div className="favorites-contact-container" css={favorite_contact_container}>
           {filteredFavContacts.map((contact) => (
             <div key={contact.id} className="contact" {...bindFav(contact.id)} onClick={()=>seeDetail(contact.id, true)}>
               <img
@@ -371,7 +392,7 @@ const updateLocalContacts = (updatedContact: Contact) => {
         </div>
       </div>
 
-      <div className="contact-container">
+      <div className="contact-container" css={contact_container}>
         {filteredContacts.map((contact) => (
           <div onClick={()=>seeDetail(contact.id, false)} key={contact.id} className="contact" {...bindReg(contact.id)}>
             <img
