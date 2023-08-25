@@ -10,7 +10,5 @@ export default defineConfig({
       },
     }),
   ],
-  server: {
-    host: '0.0.0.0'
-  }
+  base: "/react-js-phone-book"
 });
