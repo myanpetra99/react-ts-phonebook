@@ -10,5 +10,5 @@ export default defineConfig({
       },
     }),
   ],
-  base: "/react-js-phone-book"
+  base: "/react-ts-phonebook"
 });
