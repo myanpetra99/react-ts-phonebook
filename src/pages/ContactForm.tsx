@@ -579,7 +579,7 @@ function ContactForm({
               </button>
              
             </div>
-            <div className="delete-container" css={deleteContainer}>
+            {mode === "edit" && <div className="delete-container" css={deleteContainer}>
                 <button
                   css={deleteButton}
                   className="delete-button"
@@ -587,7 +587,7 @@ function ContactForm({
                 >
                   Delete
                 </button>{" "}
-              </div>
+              </div>}
           </div>
         </div>
       </div>  
