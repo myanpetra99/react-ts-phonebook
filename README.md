@@ -1,3 +1,7 @@
+# This project has been deployed to Github Pages
+
+Deployed URL 👉🏻:  https://myanpetra99.github.io/react-ts-phonebook/
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
