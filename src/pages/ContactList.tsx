@@ -43,6 +43,7 @@ const [contacts, setContacts] = useState<Contact[]>(() => {
   const [contactType, setContactType] = useState<"normal" | "favorite">(
     "normal"
   );
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [selectedContact, setSelectedContact] = useState<number>(0);
   const [formMode, setFormMode] = useState<"add" | "edit">("add");
   const [contactOffset, setContactOffset] = useState<number>(0);
@@ -158,7 +159,14 @@ const [contacts, setContacts] = useState<Contact[]>(() => {
     setContactType("normal");
   });
 
-  const seeDetail = (contactId: number) => {
+  const seeDetail = (contactId: number, isFav: boolean ) => {
+    if (isFav === true) {
+      setIsFavorite(true);
+      console.log("isFav is true");
+    } else {
+      setIsFavorite(false);
+      console.log("isFav is false");
+    }
     editContacts(contactId)
   };
 
@@ -341,7 +349,7 @@ const updateLocalContacts = (updatedContact: Contact) => {
         <div className="sub-text"> Favorites &#9733;</div>
         <div className="favorites-contact-container">
           {filteredFavContacts.map((contact) => (
-            <div key={contact.id} className="contact" {...bindFav(contact.id)} onClick={()=>seeDetail(contact.id)}>
+            <div key={contact.id} className="contact" {...bindFav(contact.id)} onClick={()=>seeDetail(contact.id, true)}>
               <img
                 className="contact-image"
                 src={`https://ui-avatars.com/api/?name=${contact.name}&background=random`}
@@ -365,7 +373,7 @@ const updateLocalContacts = (updatedContact: Contact) => {
 
       <div className="contact-container">
         {filteredContacts.map((contact) => (
-          <div onClick={()=>seeDetail(contact.id)} key={contact.id} className="contact" {...bindReg(contact.id)}>
+          <div onClick={()=>seeDetail(contact.id, false)} key={contact.id} className="contact" {...bindReg(contact.id)}>
             <img
               className="contact-image"
               src={`https://ui-avatars.com/api/?name=${contact.name}&background=random`}
@@ -393,7 +401,7 @@ const updateLocalContacts = (updatedContact: Contact) => {
         contactId={editingContact}
         updateContacts={updateLocalContacts}
         throwError={handleError}
-        isFavorited={favcontacts.some(favcontact => favcontact.id === editingContact)}
+        isFavorited={isFavorite}
         toggleFalseFavorite={() => removeFromFav(editingContact)}
         toggleTrueFavorite={() => addToFav(editingContact)}
       />

@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { css } from "@emotion/react";
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import { GET_CONTACT_DETAIL, GET_CONTACT_BY_NAME } from "../graphql/query";
-import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 import {
   EDIT_CONTACT,
@@ -26,7 +26,7 @@ type ContactFormProps = {
   contactId: number | null;
   updateContacts: (updatedContact: Contact) => void;
   throwError: (error: Error) => void;
-  isFavorited: boolean; 
+  isFavorited: boolean;
   toggleTrueFavorite: () => void;
   toggleFalseFavorite: () => void;
 };
@@ -49,15 +49,15 @@ function ContactForm({
 
   const [isFavorite, setIsFavorite] = useState<boolean>(isFavorited);
 
-  const removeFromFav = () =>{
-    setIsFavorite(false);
+  const removeFromFav = () => {
     toggleFalseFavorite();
-  }
+    setIsFavorite(false);
+  };
 
-  const addToFav = () =>{
-    setIsFavorite(true);
+  const addToFav = () => {
     toggleTrueFavorite();
-  }
+    setIsFavorite(true);
+  };
 
   const [numbers, setNumbers] = useState<PhoneNumber[]>([
     { id: null, value: "" },
@@ -210,6 +210,10 @@ function ContactForm({
       }
     }
   };
+
+  useEffect(() => {
+    setIsFavorite(isFavorited);
+  }, [isFavorited]);
 
   useEffect(() => {
     if (QueryError) {
@@ -528,11 +532,8 @@ function ContactForm({
                   <AiFillStar />
                 </button>
               ) : (
-                <button
-                  className="add-favorite-button"
-                  onClick={addToFav}
-                >
-                  <AiOutlineStar/>
+                <button className="add-favorite-button" onClick={addToFav}>
+                  <AiOutlineStar />
                 </button>
               )}
               <button
