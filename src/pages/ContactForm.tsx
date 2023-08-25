@@ -464,7 +464,6 @@ function ContactForm({
     if (mode === "edit" && contactDetailData) {
       console.log("edit mode");
       if (contactDetailData.contact_by_pk == null) {
-        
         throwError(new Error("Contact not found, it may has been deleted"));
         setDataValidation(false);
         deleteContact();
@@ -551,17 +550,21 @@ function ContactForm({
               Add more number
             </div>
             <div className="form-action-button">
-              {isFavorite ? (
-                <button
-                  className="remove-favorite-button"
-                  onClick={removeFromFav}
-                >
-                  <AiFillStar />
-                </button>
+              {mode === "edit" ? (
+                isFavorite ? (
+                  <button
+                    className="remove-favorite-button"
+                    onClick={removeFromFav}
+                  >
+                    <AiFillStar />
+                  </button>
+                ) : (
+                  <button className="add-favorite-button" onClick={addToFav}>
+                    <AiOutlineStar />
+                  </button>
+                )
               ) : (
-                <button className="add-favorite-button" onClick={addToFav}>
-                  <AiOutlineStar />
-                </button>
+                <></>
               )}
               <button
                 className="cancel-button"
@@ -577,9 +580,9 @@ function ContactForm({
               >
                 Save
               </button>
-             
             </div>
-            {mode === "edit" && <div className="delete-container" css={deleteContainer}>
+            {mode === "edit" && (
+              <div className="delete-container" css={deleteContainer}>
                 <button
                   css={deleteButton}
                   className="delete-button"
@@ -587,10 +590,11 @@ function ContactForm({
                 >
                   Delete
                 </button>{" "}
-              </div>}
+              </div>
+            )}
           </div>
         </div>
-      </div>  
+      </div>
     </div>
   );
 }
