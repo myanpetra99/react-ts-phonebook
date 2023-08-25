@@ -29,6 +29,7 @@ type ContactFormProps = {
   isFavorited: boolean;
   toggleTrueFavorite: () => void;
   toggleFalseFavorite: () => void;
+  toggleDeleteContact: () => void;
 };
 
 function ContactForm({
@@ -41,6 +42,7 @@ function ContactForm({
   isFavorited,
   toggleTrueFavorite,
   toggleFalseFavorite,
+  toggleDeleteContact,
 }: ContactFormProps) {
   type PhoneNumber = {
     id: number | null;
@@ -52,6 +54,11 @@ function ContactForm({
   const removeFromFav = () => {
     toggleFalseFavorite();
     setIsFavorite(false);
+  };
+
+  const deleteContact = () => {
+    toggleDeleteContact();
+    toggleVisibility();
   };
 
   const addToFav = () => {
@@ -212,9 +219,9 @@ function ContactForm({
   };
 
   useEffect(() => {
-    console.log('isFavorited', isFavorited)
+    console.log("isFavorited", isFavorited);
     setIsFavorite(isFavorited);
-  }, [isFavorited,contactId]);
+  }, [isFavorited, contactId]);
 
   useEffect(() => {
     if (QueryError) {
@@ -387,11 +394,13 @@ function ContactForm({
         throwError(
           new Error("Failed to edit contact, it may has been deleted")
         );
+        deleteContact();
         setDataValidation(false);
         return;
       }
     } else {
       console.error("Failed to fetch the updated contact after edit.");
+      deleteContact();
       return;
     }
 
@@ -426,6 +435,15 @@ function ContactForm({
     z-index: 999;
   `;
 
+  const deleteButton = css`
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    font-weight: bold;
+    margin-top: 40px;
+  `;
+
   const hideForm = css`
     position: fixed;
     bottom: 0;
@@ -436,12 +454,20 @@ function ContactForm({
     z-index: 999;
   `;
 
+  const deleteContainer = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `;
+
   useEffect(() => {
     if (mode === "edit" && contactDetailData) {
       console.log("edit mode");
       if (contactDetailData.contact_by_pk == null) {
+        
         throwError(new Error("Contact not found, it may has been deleted"));
         setDataValidation(false);
+        deleteContact();
         return;
       }
       const fetchedContact = contactDetailData.contact_by_pk;
@@ -551,10 +577,20 @@ function ContactForm({
               >
                 Save
               </button>
+             
             </div>
+            <div className="delete-container" css={deleteContainer}>
+                <button
+                  css={deleteButton}
+                  className="delete-button"
+                  onClick={deleteContact}
+                >
+                  Delete
+                </button>{" "}
+              </div>
           </div>
         </div>
-      </div>
+      </div>  
     </div>
   );
 }

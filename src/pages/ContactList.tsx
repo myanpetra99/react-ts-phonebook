@@ -80,7 +80,7 @@ const [contacts, setContacts] = useState<Contact[]>(() => {
     setShowPopup(false);
   };
 
-  const handleDeleteContact = async (contactId: number) => {
+  const handleDeleteContact = async (contactId: number|null) => {
     try {
       const { data } = await deleteContact({
         variables: {
@@ -426,6 +426,7 @@ const updateLocalContacts = (updatedContact: Contact) => {
         isFavorited={isFavorite}
         toggleFalseFavorite={() => removeFromFav(editingContact)}
         toggleTrueFavorite={() => addToFav(editingContact)}
+        toggleDeleteContact={() => handleDeleteContact(editingContact)}
       />
 
       <ErrorPopup message={String(error)|| String(QueryError)} isVisible={error!=""} />
