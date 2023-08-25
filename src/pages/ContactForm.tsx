@@ -212,8 +212,9 @@ function ContactForm({
   };
 
   useEffect(() => {
+    console.log('isFavorited', isFavorited)
     setIsFavorite(isFavorited);
-  }, [isFavorited]);
+  }, [isFavorited,contactId]);
 
   useEffect(() => {
     if (QueryError) {

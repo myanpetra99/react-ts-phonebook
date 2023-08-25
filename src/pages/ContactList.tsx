@@ -190,6 +190,7 @@ const [contacts, setContacts] = useState<Contact[]>(() => {
     }
     editContacts(contactId)
   };
+  
 
   const filteredContacts = contacts.filter((contact) =>
     contact.name.toLowerCase().includes(searchValue.toLowerCase())
